@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Design4U App</string>
+    <string name="splash_tagline">Powered by DESIGN 4 U</string>
+    <string name="offline_banner_text">Offline Mode — Viewing Local Content</string>
+    <string name="download_started">Download started</string>
+    <string name="app_not_installed">No compatible app found to open this link</string>
+</resources>

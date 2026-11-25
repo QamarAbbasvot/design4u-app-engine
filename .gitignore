@@ -1,0 +1,24 @@
+# Gradle & Android Studio
+android-template/.gradle/
+android-template/build/
+android-template/app/build/
+android-template/local.properties
+android-template/keystore.properties
+*.iml
+.idea/
+
+# Keystores & build outputs
+*.jks
+*.keystore
+keystore-info.txt
+dist/
+
+# Firebase cache
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+
+# OS & Node
+.DS_Store
+Thumbs.db
+node_modules/

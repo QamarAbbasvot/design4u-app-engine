@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design4U — Web-to-Android App Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            slatebg: '#020617'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .phone-frame {
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(148, 163, 184, 0.18);
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.75; }
+      70% { transform: scale(1.06); opacity: 0; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+    .pulse-ring {
+      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+
+  <!-- Top Header -->
+  <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="text-lg font-extrabold tracking-tight text-white">Design4U</span>
+            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              ZERO-COST CLOUD ENGINE
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 truncate">Build &amp; Publish Android Apps in Minutes — Powered by DESIGN 4 U</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5 shrink-0">
+        <div id="tokenStatusBadge" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-rose-500/30 bg-rose-500/10 text-rose-300">
+          <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+          <span>GitHub Token Missing</span>
+        </div>
+        <button id="openSettingsBtn" type="button"
+          class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 hover:border-emerald-500/50 transition shadow-sm">
+          <span>⚙️</span>
+          <span>Settings</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- Left Panel: 4-Step Wizard -->
+      <section class="lg:col-span-7 xl:col-span-7 bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+
+        <!-- Wizard Progress Tabs -->
+        <nav class="border-b border-slate-800 bg-slate-900/60 p-3 sm:p-4">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="stepNav">
+            <button type="button" data-step="1" class="step-tab flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left border transition">
+              <span class="step-num w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0">1</span>
+              <div class="min-w-0">
+                <div class="text-xs font-semibold truncate">App Identity</div>
+                <div class="text-[10px] opacity-75 truncate">Name &amp; Colors</div>
+              </div>
+            </button>
+            <button type="button" data-step="2" class="step-tab flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left border transition">
+              <span class="step-num w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0">2</span>
+              <div class="min-w-0">
+                <div class="text-xs font-semibold truncate">Branding</div>
+                <div class="text-[10px] opacity-75 truncate">Icon &amp; Splash</div>
+              </div>
+            </button>
+            <button type="button" data-step="3" class="step-tab flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left border transition">
+              <span class="step-num w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0">3</span>
+              <div class="min-w-0">
+                <div class="text-xs font-semibold truncate">Hybrid Pages</div>
+                <div class="text-[10px] opacity-75 truncate">Online &amp; Offline</div>
+              </div>
+            </button>
+            <button type="button" data-step="4" class="step-tab flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left border transition">
+              <span class="step-num w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0">4</span>
+              <div class="min-w-0">
+                <div class="text-xs font-semibold truncate">Cloud Build</div>
+                <div class="text-[10px] opacity-75 truncate">APK &amp; Play AAB</div>
+              </div>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Step Panels -->
+        <div class="p-5 sm:p-6 space-y-6">
+
+          <!-- STEP 1: App Identity -->
+          <div id="stepPanel1" class="step-panel space-y-5">
+            <div>
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="text-emerald-400">01.</span> App Identity &amp; Theme
+              </h2>
+              <p class="text-xs text-slate-400 mt-1">Configure your Android application name, Play Store package identifier, and native theme palette.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="sm:col-span-2">
+                <label for="appName" class="block text-xs font-semibold text-slate-300 mb-1.5">App Name</label>
+                <input id="appName" type="text" maxlength="40" value="Design4U Store"
+                  placeholder="e.g. Design4U Store"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+              </div>
+
+              <div class="sm:col-span-2">
+                <div class="flex items-center justify-between mb-1.5">
+                  <label for="packageId" class="block text-xs font-semibold text-slate-300">Package ID (Application ID)</label>
+                  <button id="toggleAutoPkgBtn" type="button" class="text-[11px] font-medium text-emerald-400 hover:text-emerald-300">
+                    Auto-sync: ON
+                  </button>
+                </div>
+                <input id="packageId" type="text" value="com.design4u.design4ustore"
+                  placeholder="com.design4u.myapp"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm font-mono text-emerald-300 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                <p class="text-[11px] text-slate-500 mt-1">Must be unique on Google Play (format: <code class="text-slate-400">com.design4u.clean_name</code>).</p>
+              </div>
+
+              <div>
+                <label for="versionName" class="block text-xs font-semibold text-slate-300 mb-1.5">Version Name</label>
+                <input id="versionName" type="text" value="1.0.0" placeholder="1.0.0"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500" />
+              </div>
+
+              <div>
+                <label for="versionCode" class="block text-xs font-semibold text-slate-300 mb-1.5">Version Code</label>
+                <input id="versionCode" type="number" min="1" step="1" value="1"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500" />
+              </div>
+
+              <div>
+                <label for="primaryColorHex" class="block text-xs font-semibold text-slate-300 mb-1.5">Primary Theme Color</label>
+                <div class="flex items-center gap-2">
+                  <input id="primaryColorPicker" type="color" value="#10B981"
+                    class="w-11 h-10 rounded-lg bg-slate-950 border border-slate-700 cursor-pointer p-0.5" />
+                  <input id="primaryColorHex" type="text" value="#10B981" maxlength="7"
+                    class="flex-1 px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm font-mono uppercase text-white focus:outline-none focus:border-emerald-500" />
+                </div>
+              </div>
+
+              <div>
+                <label for="statusBarColorHex" class="block text-xs font-semibold text-slate-300 mb-1.5">Status Bar Color</label>
+                <div class="flex items-center gap-2">
+                  <input id="statusBarColorPicker" type="color" value="#0F172A"
+                    class="w-11 h-10 rounded-lg bg-slate-950 border border-slate-700 cursor-pointer p-0.5" />
+                  <input id="statusBarColorHex" type="text" value="#0F172A" maxlength="7"
+                    class="flex-1 px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm font-mono uppercase text-white focus:outline-none focus:border-emerald-500" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: Branding & Splash Screen -->
+          <div id="stepPanel2" class="step-panel hidden space-y-5">
+            <div>
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="text-emerald-400">02.</span> Branding &amp; Splash Screen
+              </h2>
+              <p class="text-xs text-slate-400 mt-1">Upload via ImgBB (zero-cost) or paste direct HTTPS image URLs for your 512x512 App Icon and Splash logo.</p>
+            </div>
+
+            <!-- App Icon -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <div class="text-sm font-semibold text-white">App Icon (512×512 PNG/JPG)</div>
+                  <div class="text-xs text-slate-400">Auto-resized into Android mipmap-mdpi through xxxhdpi.</div>
+                </div>
+                <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition shrink-0">
+                  <input id="iconFileInput" type="file" accept="image/*" class="hidden" />
+                  <span>Upload Icon</span>
+                </label>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center overflow-hidden shrink-0">
+                  <img id="iconThumb" alt="App Icon" class="w-full h-full object-cover hidden" />
+                  <span id="iconThumbFallback" class="text-lg font-bold text-emerald-400">D</span>
+                </div>
+                <div class="flex-1">
+                  <input id="iconUrl" type="url" placeholder="https://i.ibb.co/.../icon.png (or leave blank for default)"
+                    class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-emerald-500" />
+                  <div id="iconUploadStatus" class="text-[11px] text-slate-400 mt-1">Supports ImgBB upload or direct HTTPS image URL.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Splash Logo -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <div class="text-sm font-semibold text-white">Splash Screen Logo</div>
+                  <div class="text-xs text-slate-400">Displayed centered during app startup.</div>
+                </div>
+                <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition shrink-0">
+                  <input id="splashFileInput" type="file" accept="image/*" class="hidden" />
+                  <span>Upload Splash</span>
+                </label>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center overflow-hidden shrink-0">
+                  <img id="splashThumb" alt="Splash Logo" class="w-full h-full object-contain hidden" />
+                  <span id="splashThumbFallback" class="text-xs font-bold text-slate-400">LOGO</span>
+                </div>
+                <div class="flex-1">
+                  <input id="splashUrl" type="url" placeholder="https://i.ibb.co/.../splash.png (or leave blank for default)"
+                    class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-emerald-500" />
+                  <div id="splashUploadStatus" class="text-[11px] text-slate-400 mt-1">Supports ImgBB upload or direct HTTPS image URL.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="splashBgHex" class="block text-xs font-semibold text-slate-300 mb-1.5">Splash Background Color</label>
+                <div class="flex items-center gap-2">
+                  <input id="splashBgPicker" type="color" value="#0F172A"
+                    class="w-11 h-10 rounded-lg bg-slate-950 border border-slate-700 cursor-pointer p-0.5" />
+                  <input id="splashBgHex" type="text" value="#0F172A" maxlength="7"
+                    class="flex-1 px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm font-mono uppercase text-white focus:outline-none focus:border-emerald-500" />
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label for="splashDuration" class="block text-xs font-semibold text-slate-300">Splash Duration</label>
+                  <span id="splashDurationLabel" class="text-xs font-bold text-emerald-400">2 seconds</span>
+                </div>
+                <input id="splashDuration" type="range" min="1" max="5" step="1" value="2"
+                  class="w-full accent-emerald-500 mt-2 cursor-pointer" />
+                <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                  <span>1s</span><span>2s</span><span>3s</span><span>4s</span><span>5s</span>
+                </div>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="splashTagline" class="block text-xs font-semibold text-slate-300 mb-1.5">Splash Tagline</label>
+                <input id="splashTagline" type="text" maxlength="80" value="Powered by DESIGN 4 U"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500" />
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3: Hybrid Offline + Online Architecture -->
+          <div id="stepPanel3" class="step-panel hidden space-y-5">
+            <div>
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="text-emerald-400">03.</span> Hybrid Offline + Online Architecture
+              </h2>
+              <p class="text-xs text-slate-400 mt-1">Combine your live website with built-in offline HTML pages &amp; a custom "No Internet" fallback screen for Google Play compliance.</p>
+            </div>
+
+            <!-- Live URL + Offline Toggle -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-4">
+              <div>
+                <label for="websiteUrl" class="block text-xs font-semibold text-slate-300 mb-1.5">Live Website URL</label>
+                <input id="websiteUrl" type="url" value="https://example.com" placeholder="https://yourdomain.com"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500" />
+              </div>
+
+              <div class="flex items-center justify-between gap-4 pt-1">
+                <div>
+                  <div class="text-sm font-semibold text-white">Hybrid Offline Mode</div>
+                  <div class="text-xs text-slate-400">Auto-switch to bundled offline pages when internet drops (prevents Play Store rejection).</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                  <input id="offlineModeToggle" type="checkbox" checked class="sr-only peer" />
+                  <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Built-in Offline Pages & Custom No-Internet Editor -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="text-sm font-semibold text-white">Built-in Offline Pages &amp; Fallback HTML</div>
+                <div class="flex items-center gap-2">
+                  <button id="previewCurrentOfflineBtn" type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25">
+                    Preview in Phone
+                  </button>
+                  <button id="resetOfflinePageBtn" type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700">
+                    Reset Page
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-1.5" id="offlinePageTabs">
+                <button type="button" data-page="index" class="offline-page-tab px-3 py-1.5 rounded-lg text-xs font-semibold border transition">Home</button>
+                <button type="button" data-page="about" class="offline-page-tab px-3 py-1.5 rounded-lg text-xs font-semibold border transition">About Us</button>
+                <button type="button" data-page="services" class="offline-page-tab px-3 py-1.5 rounded-lg text-xs font-semibold border transition">Services</button>
+                <button type="button" data-page="contact" class="offline-page-tab px-3 py-1.5 rounded-lg text-xs font-semibold border transition">Contact Us</button>
+                <button type="button" data-page="offline_error" class="offline-page-tab px-3 py-1.5 rounded-lg text-xs font-semibold border transition">No Internet Screen</button>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                  <span>Editing: <code id="editingFileLabel" class="text-emerald-400">assets/offline/index.html</code></span>
+                  <span id="offlineHtmlSize" class="text-slate-500">0 B</span>
+                </div>
+                <textarea id="offlineHtmlEditor" rows="8" spellcheck="false"
+                  class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 leading-relaxed"></textarea>
+              </div>
+            </div>
+
+            <!-- Bottom Navigation Bar (Up to 4 tabs) -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <div class="text-sm font-semibold text-white">Material Bottom Navigation Bar</div>
+                  <div class="text-xs text-slate-400">Configure up to 4 native navigation tabs.</div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <button id="addNavTabBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition">
+                    + Add Tab
+                  </button>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input id="bottomNavToggle" type="checkbox" checked class="sr-only peer" />
+                    <div class="w-10 h-5 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                  </label>
+                </div>
+              </div>
+
+              <div id="navTabsContainer" class="space-y-2.5"></div>
+            </div>
+          </div>
+
+          <!-- STEP 4: Cloud Build & Play Store Output -->
+          <div id="stepPanel4" class="step-panel hidden space-y-5">
+            <div>
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="text-emerald-400">04.</span> Cloud Build &amp; Play Store Output
+              </h2>
+              <p class="text-xs text-slate-400 mt-1">Compile a signed release APK &amp; Play Store AAB on GitHub Actions using a fresh 2048-bit RSA keystore.</p>
+            </div>
+
+            <!-- Build Summary Card -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Build Manifest Summary</span>
+                <span id="payloadSizeBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-emerald-400">Payload: 0 KB</span>
+              </div>
+              <div id="buildSummaryGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs"></div>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button id="generateBuildBtn" type="button"
+                class="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20 transition cursor-pointer">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <span>Generate APK &amp; Play Store AAB</span>
+              </button>
+              <button id="refreshTrackerBtn" type="button"
+                class="px-4 py-3.5 rounded-xl font-semibold text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+                Refresh Runs &amp; Release
+              </button>
+            </div>
+
+            <div id="buildAlertBox" class="hidden rounded-xl p-3.5 text-xs border"></div>
+
+            <!-- Live Build Tracker -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span id="trackerPulse" class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+                  <h3 class="text-sm font-bold text-white">Live GitHub Actions Build Tracker</h3>
+                </div>
+                <span id="trackerPollInfo" class="text-[11px] text-slate-400">Polling every 8s when active</span>
+              </div>
+
+              <div id="buildRunStatus" class="text-xs text-slate-400 bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
+                No build dispatched yet in this session. Click <strong class="text-slate-200">Generate APK &amp; Play Store AAB</strong> or <strong class="text-slate-200">Refresh Runs &amp; Release</strong>.
+              </div>
+            </div>
+
+            <!-- Latest GitHub Release Downloads -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="text-sm font-bold text-white">Play Store &amp; Release Artifacts</h3>
+                <span id="releaseTagBadge" class="text-[11px] font-mono text-slate-400">Latest Release</span>
+              </div>
+              <div id="releaseAssetsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                <div class="sm:col-span-2 text-slate-500 py-2">
+                  Download links for <code class="text-slate-300">app-release.apk</code>, <code class="text-slate-300">app-release.aab</code>, <code class="text-slate-300">release-keystore.jks</code>, and <code class="text-slate-300">keystore-info.txt</code> will appear here once a GitHub Release is published.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wizard Footer Navigation -->
+          <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+            <button id="prevStepBtn" type="button"
+              class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition">
+              ← Previous
+            </button>
+            <div class="text-xs text-slate-500">Step <span id="currentStepLabel" class="text-slate-200 font-semibold">1</span> of 4</div>
+            <button id="nextStepBtn" type="button"
+              class="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition">
+              Next Step →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Live Interactive Android Phone Preview -->
+      <aside class="lg:col-span-5 xl:col-span-5 lg:sticky lg:top-24 flex flex-col items-center space-y-4">
+
+        <!-- Preview Mode Bar -->
+        <div class="w-full max-w-[360px] bg-slate-900 border border-slate-800 rounded-2xl p-2 flex items-center justify-between gap-1">
+          <button type="button" data-preview="splash" class="preview-mode-btn flex-1 py-1.5 px-2 rounded-xl text-xs font-semibold transition">Splash</button>
+          <button type="button" data-preview="online" class="preview-mode-btn flex-1 py-1.5 px-2 rounded-xl text-xs font-semibold transition">Online</button>
+          <button type="button" data-preview="offline" class="preview-mode-btn flex-1 py-1.5 px-2 rounded-xl text-xs font-semibold transition">Offline</button>
+          <button type="button" data-preview="no_internet" class="preview-mode-btn flex-1 py-1.5 px-2 rounded-xl text-xs font-semibold transition">No Net</button>
+        </div>
+
+        <!-- Phone Hardware Shell -->
+        <div class="phone-frame w-[330px] sm:w-[350px] h-[660px] bg-slate-950 rounded-[44px] border-[6px] border-slate-800 p-2.5 flex flex-col relative overflow-hidden">
+          <!-- Speaker & Camera Notch -->
+          <div class="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 border border-slate-800">
+            <span class="w-8 h-1 rounded-full bg-slate-700"></span>
+            <span class="w-2 h-2 rounded-full bg-slate-700 ring-1 ring-slate-600"></span>
+          </div>
+
+          <!-- Phone Screen -->
+          <div class="flex-1 rounded-[34px] overflow-hidden bg-slate-900 flex flex-col relative">
+
+            <!-- Android Status Bar -->
+            <div id="phoneStatusBar" class="h-8 px-5 pt-1 flex items-center justify-between text-[10px] font-semibold text-white shrink-0 transition-colors">
+              <span>9:41</span>
+              <div class="flex items-center gap-1.5">
+                <span id="phoneSignalLabel">5G</span>
+                <span>▮▮▮</span>
+                <span>100%</span>
+              </div>
+            </div>
+
+            <!-- Offline Red Banner (visible in No Net / offline fallback) -->
+            <div id="phoneOfflineBanner" class="hidden bg-red-600 text-white text-[10px] font-bold text-center py-1 px-2 shrink-0">
+              Offline Mode — Viewing Local Content
+            </div>
+
+            <!-- Viewport -->
+            <div id="phoneViewport" class="flex-1 relative overflow-hidden bg-slate-950">
+
+              <!-- Mode: Splash -->
+              <div id="previewSplashView" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transition-colors">
+                <div class="w-24 h-24 rounded-3xl bg-white/10 border border-white/15 flex items-center justify-center overflow-hidden shadow-xl mb-5">
+                  <img id="previewSplashImg" alt="Splash" class="w-full h-full object-contain hidden" />
+                  <span id="previewSplashInitial" class="text-4xl font-black text-white">D</span>
+                </div>
+                <div id="previewSplashTitle" class="text-xl font-extrabold text-white tracking-tight">Design4U Store</div>
+                <div id="previewSplashTagline" class="text-xs text-white/75 mt-1.5">Powered by DESIGN 4 U</div>
+                <div class="mt-8 flex items-center gap-2 text-[10px] text-white/60">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span id="previewSplashDuration">Splash: 2s</span>
+                </div>
+              </div>
+
+              <!-- Mode: Online -->
+              <div id="previewOnlineView" class="hidden absolute inset-0 flex flex-col bg-slate-900">
+                <div class="px-3 py-2 bg-slate-950/90 border-b border-slate-800 flex items-center gap-2 shrink-0">
+                  <div class="w-6 h-6 rounded-lg overflow-hidden bg-emerald-500/20 flex items-center justify-center shrink-0">
+                    <img id="previewHeaderIcon" alt="" class="w-full h-full object-cover hidden" />
+                    <span id="previewHeaderInitial" class="text-[11px] font-bold text-emerald-400">D</span>
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <div id="previewHeaderAppName" class="text-xs font-bold text-white truncate">Design4U Store</div>
+                    <div id="previewHeaderUrl" class="text-[10px] text-slate-400 truncate">https://example.com</div>
+                  </div>
+                  <button id="reloadOnlinePreviewBtn" type="button" class="text-[10px] px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">↻</button>
+                </div>
+                <div class="flex-1 relative bg-white">
+                  <iframe id="onlinePreviewFrame" title="Online Preview" class="w-full h-full border-0" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+                  <div id="onlineFrameNotice" class="hidden absolute inset-0 bg-slate-950/95 text-slate-200 p-5 flex flex-col items-center justify-center text-center">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center mb-3 text-xl">🌐</div>
+                    <div class="text-sm font-bold text-white mb-1">Live WebView Target Ready</div>
+                    <p id="onlineNoticeUrl" class="text-xs text-emerald-400 font-mono break-all mb-3"></p>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Some websites block browser iframe embedding (<code class="text-slate-300">X-Frame-Options</code>), but load natively inside Android <code class="text-slate-300">WebView</code> in your compiled APK/AAB.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mode: Offline HTML & No Internet -->
+              <div id="previewOfflineView" class="hidden absolute inset-0 bg-slate-950">
+                <iframe id="offlinePreviewFrame" title="Offline Page Preview" class="w-full h-full border-0" sandbox="allow-scripts"></iframe>
+              </div>
+
+            </div>
+
+            <!-- Material Bottom Navigation Bar -->
+            <div id="phoneBottomNav" class="h-14 bg-slate-950 border-t border-slate-800 px-1 flex items-center justify-around shrink-0"></div>
+
+            <!-- Android Gesture Pill -->
+            <div class="h-4 bg-slate-950 flex items-center justify-center shrink-0">
+              <div class="w-24 h-1 rounded-full bg-slate-700"></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-[11px] text-slate-500 text-center max-w-[340px]">
+          Interactive Preview: Click tabs inside the phone frame to test Live URL vs. Offline HTML navigation.
+        </p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+    <div class="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span>⚙️</span>
+          <h2 class="text-base font-bold text-white">Cloud Build &amp; API Settings</h2>
+        </div>
+        <button id="closeSettingsBtn" type="button" class="text-slate-400 hover:text-white text-lg leading-none px-1">&times;</button>
+      </div>
+
+      <form id="settingsForm" class="p-5 space-y-4">
+        <div id="settingsPromptBanner" class="hidden p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs text-rose-200">
+          Please enter and save your GitHub Personal Access Token before generating an APK &amp; AAB.
+        </div>
+
+        <div>
+          <label for="settingsGithubRepo" class="block text-xs font-semibold text-slate-300 mb-1.5">GitHub Repository</label>
+          <input id="settingsGithubRepo" type="text" required placeholder="QamarAbbasvot/design4u-app-engine"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white font-mono focus:outline-none focus:border-emerald-500" />
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="settingsGithubToken" class="block text-xs font-semibold text-slate-300">GitHub Personal Access Token</label>
+            <button type="button" data-toggle-vis="settingsGithubToken" class="text-[11px] text-emerald-400 hover:text-emerald-300">Show</button>
+          </div>
+          <input id="settingsGithubToken" type="password" autocomplete="off" placeholder="ghp_... or github_pat_..."
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white font-mono focus:outline-none focus:border-emerald-500" />
+          <p class="text-[11px] text-slate-500 mt-1">Stored only in your browser's <code class="text-slate-400">localStorage</code>. Requires <code class="text-slate-400">repo</code> / Actions dispatch permission.</p>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="settingsImgbbKey" class="block text-xs font-semibold text-slate-300">ImgBB API Key <span class="text-slate-500 font-normal">(Optional)</span></label>
+            <button type="button" data-toggle-vis="settingsImgbbKey" class="text-[11px] text-emerald-400 hover:text-emerald-300">Show</button>
+          </div>
+          <input id="settingsImgbbKey" type="password" autocomplete="off" placeholder="Optional ImgBB API key"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white font-mono focus:outline-none focus:border-emerald-500" />
+          <p class="text-[11px] text-slate-500 mt-1">Stored only in <code class="text-slate-400">localStorage</code>. Leave blank to paste direct image URLs instead.</p>
+        </div>
+
+        <div class="pt-2 flex items-center justify-between gap-2">
+          <button id="clearSettingsBtn" type="button"
+            class="px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 transition">
+            Clear Keys
+          </button>
+          <div class="flex items-center gap-2">
+            <button id="cancelSettingsBtn" type="button"
+              class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 transition">
+              Cancel
+            </button>
+            <button type="submit"
+              class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition">
+              Save Settings
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

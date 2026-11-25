@@ -1,0 +1,35 @@
+{
+  "websiteUrl": "https://example.com",
+  "offlineMode": true,
+  "splashDurationMs": 2000,
+  "primaryColor": "#10B981",
+  "statusBarColor": "#0F172A",
+  "splashBackgroundColor": "#0F172A",
+  "bottomNavEnabled": true,
+  "tabs": [
+    {
+      "label": "Home",
+      "icon": "home",
+      "targetType": "live",
+      "target": "https://example.com"
+    },
+    {
+      "label": "About",
+      "icon": "info",
+      "targetType": "offline",
+      "target": "about.html"
+    },
+    {
+      "label": "Services",
+      "icon": "services",
+      "targetType": "offline",
+      "target": "services.html"
+    },
+    {
+      "label": "Contact",
+      "icon": "contact",
+      "targetType": "offline",
+      "target": "contact.html"
+    }
+  ]
+}

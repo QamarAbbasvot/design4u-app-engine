@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No Internet Connection</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+    .box { max-width: 360px; width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 20px; padding: 28px 22px; }
+    .icon { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); color: #f87171; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; }
+    h1 { font-size: 20px; margin-bottom: 8px; }
+    p { font-size: 14px; color: #94a3b8; margin-bottom: 20px; line-height: 1.5; }
+    button { width: 100%; padding: 12px 18px; border: none; border-radius: 12px; background: #10b981; color: #0f172a; font-weight: 700; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="icon">!</div>
+    <h1>No Internet Connection</h1>
+    <p>Please check your Wi-Fi or mobile data connection and try again.</p>
+    <button onclick="window.Design4U ? Design4U.retryOnline() : location.reload()">Try Again</button>
+  </div>
+</body>
+</html>
