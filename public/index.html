@@ -112,6 +112,64 @@
       color: #ffffff;
       box-shadow: 0 6px 22px -6px rgba(16, 185, 129, 0.55);
     }
+
+    /* Animated Moving Neon Outline for Login Form Card */
+    @keyframes neon-border-spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    @keyframes neon-ambient-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 28px -4px rgba(16, 185, 129, 0.42),
+          0 0 54px -10px rgba(56, 189, 248, 0.30),
+          0 25px 60px -15px rgba(0, 0, 0, 0.85);
+      }
+      50% {
+        box-shadow:
+          0 0 36px -2px rgba(56, 189, 248, 0.50),
+          0 0 64px -8px rgba(16, 185, 129, 0.40),
+          0 25px 60px -15px rgba(0, 0, 0, 0.85);
+      }
+    }
+    .neon-login-shell {
+      position: relative;
+      padding: 2.5px;
+      border-radius: 1.55rem;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.55);
+      animation: neon-ambient-pulse 4s ease-in-out infinite;
+    }
+    .neon-login-shell::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 220%;
+      height: 220%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg 20deg,
+        #10b981 55deg,
+        #34d399 80deg,
+        #38bdf8 110deg,
+        transparent 150deg 200deg,
+        #6366f1 235deg,
+        #38bdf8 265deg,
+        #10b981 295deg,
+        transparent 335deg 360deg
+      );
+      animation: neon-border-spin 4.2s linear infinite;
+      z-index: 0;
+    }
+    .neon-login-inner {
+      position: relative;
+      z-index: 1;
+      border-radius: calc(1.55rem - 2.5px);
+      background: linear-gradient(165deg, rgba(8, 15, 36, 0.90), rgba(10, 20, 46, 0.84));
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
   </style>
 </head>
 <body class="text-slate-100 min-h-screen flex antialiased selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-x-hidden">
@@ -236,8 +294,8 @@
 
       <!-- Right Column: Developer Login Glass Card -->
       <div class="lg:col-span-5 flex justify-center lg:justify-end">
-        <div class="w-full max-w-[400px] wizard-glow-border p-[1.5px] rounded-3xl">
-          <div class="rounded-[23px] bg-slate-950/85 backdrop-blur-xl px-6 py-6 sm:px-7 sm:py-7">
+        <div class="w-full max-w-[400px] neon-login-shell">
+          <div class="neon-login-inner px-6 py-6 sm:px-7 sm:py-7">
             <div class="flex flex-col items-center text-center mb-5">
               <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/40 ring-1 ring-emerald-300/40 mb-2.5">
                 <span class="text-2xl font-black text-white">D</span>
