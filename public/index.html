@@ -120,9 +120,17 @@
   <div class="fixed inset-0 bg-dot-grid opacity-30 pointer-events-none z-0"></div>
 
   <!-- Developer Login Gate -->
-  <div id="loginOverlay" class="fixed inset-0 z-[70] overflow-y-auto flex flex-col justify-between px-4 sm:px-8 py-4 sm:py-5"
-    style="background-color:#050a1a; background-image: radial-gradient(ellipse 60% 50% at 12% 15%, rgba(16,185,129,0.22), transparent 65%), radial-gradient(ellipse 55% 50% at 88% 82%, rgba(16,185,129,0.18), transparent 65%), radial-gradient(ellipse 60% 55% at 62% 35%, rgba(37,99,235,0.28), transparent 68%);">
-    <div class="fixed inset-0 bg-dot-grid opacity-25 pointer-events-none"></div>
+  <div id="loginOverlay" class="fixed inset-0 z-[70] overflow-y-auto flex flex-col justify-between px-4 sm:px-8 py-4 sm:py-5 bg-[#050a1a]">
+    <!-- Looping Background Video -->
+    <video id="loginBgVideo" autoplay muted loop playsinline preload="auto"
+      class="fixed inset-0 w-full h-full object-cover pointer-events-none z-0">
+      <source src="./assets/login-bg.mp4" type="video/mp4" />
+    </video>
+    <!-- Readability Scrim & Aurora Tint over Video -->
+    <div class="fixed inset-0 pointer-events-none z-0"
+      style="background: linear-gradient(135deg, rgba(5,10,26,0.72) 0%, rgba(7,18,42,0.58) 50%, rgba(4,24,22,0.72) 100%), radial-gradient(ellipse 60% 50% at 15% 18%, rgba(16,185,129,0.20), transparent 65%), radial-gradient(ellipse 55% 50% at 85% 82%, rgba(37,99,235,0.24), transparent 65%);">
+    </div>
+    <div class="fixed inset-0 bg-dot-grid opacity-20 pointer-events-none z-0"></div>
 
     <!-- Login Top Header -->
     <div class="relative z-10 max-w-[1260px] w-full mx-auto flex items-center justify-between gap-4">
@@ -1203,12 +1211,14 @@
       const loginErrorBox = document.getElementById("loginErrorBox");
       const loginInfoBox = document.getElementById("loginInfoBox");
       const toggleLoginPwd = document.getElementById("toggleLoginPwd");
+      const loginBgVideo = document.getElementById("loginBgVideo");
 
       const unlockPortal = () => {
         loginOverlay.classList.add("hidden");
         portalWrapper.classList.remove("hidden");
         loginErrorBox.classList.add("hidden");
         loginInfoBox.classList.add("hidden");
+        loginBgVideo?.pause();
       };
 
       const lockPortal = () => {
@@ -1217,6 +1227,7 @@
         portalWrapper.classList.add("hidden");
         loginOverlay.classList.remove("hidden");
         loginPassword.value = "";
+        loginBgVideo?.play().catch(() => {});
         closeSidebar();
       };
 
