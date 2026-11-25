@@ -269,26 +269,145 @@
           </div>
         </div>
 
-        <!-- Decorative 3D Angled Phone Graphic (hidden on very small screens) -->
-        <div class="hidden md:flex relative items-center justify-center w-60 h-80 shrink-0 select-none">
-          <div class="absolute inset-4 rounded-full bg-emerald-500/20 blur-2xl"></div>
-          <!-- Glowing Orbit Ring -->
-          <div class="absolute w-64 h-24 rounded-full border-2 border-emerald-400/70 shadow-[0_0_24px_rgba(16,185,129,0.65)] -rotate-12 translate-y-12"></div>
+        <!-- Android App Development Theme Illustration (matching reference mockup) -->
+        <div class="hidden md:flex relative flex-col items-center justify-center w-[290px] xl:w-[320px] shrink-0 select-none py-2">
+          <div class="relative w-full h-[290px] flex items-center justify-center">
+            <!-- Soft Ambient Glow -->
+            <div class="absolute inset-6 rounded-full bg-emerald-500/15 blur-2xl pointer-events-none"></div>
 
-          <!-- Tilted Phone -->
-          <div class="relative w-44 h-72 rounded-[30px] border-[4px] border-slate-300/35 bg-gradient-to-br from-blue-600 via-indigo-700 to-slate-950 shadow-2xl shadow-blue-900/60 rotate-6 flex flex-col items-center justify-center overflow-hidden">
-            <div class="absolute top-2 w-14 h-2 rounded-full bg-slate-950/80"></div>
-            <!-- Android Bot SVG -->
-            <svg class="w-24 h-24 text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.75)]" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 00-.83.22l-1.88 3.24a11.43 11.43 0 00-8.94 0L5.65 5.67a.643.643 0 00-.87-.2c-.28.18-.37.54-.22.83L6.4 9.48A10.81 10.81 0 001 18h22a10.81 10.81 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/>
+            <!-- Subtle Grid & Dot Matrix Doodles -->
+            <svg class="absolute top-6 left-2 w-16 h-16 opacity-35 text-slate-300 pointer-events-none" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M0 16H64M0 32H64M0 48H64M16 0V64M32 0V64M48 0V64" />
             </svg>
+            <div class="absolute top-12 right-2 grid grid-cols-6 gap-1.5 opacity-80 pointer-events-none">
+              <span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span><span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span>
+            </div>
+
+            <!-- Code </> Doodle Top Left -->
+            <div class="absolute top-1 left-3 text-emerald-300 font-black text-lg tracking-tight -rotate-12 drop-shadow">&lt;/&gt;</div>
+            <!-- Curved Arrow Top Center -->
+            <svg class="absolute top-0 left-1/2 -translate-x-4 w-12 h-8 text-slate-300/80" viewBox="0 0 60 36" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <path d="M52 24 C40 6, 20 6, 8 14" />
+              <path d="M14 6 L7 15 L17 18" />
+            </svg>
+            <!-- Starburst Top Right -->
+            <svg class="absolute top-2 right-5 w-7 h-7 text-amber-300/85" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M16 3V29M3 16H29M6 6L26 26M26 6L6 26" />
+            </svg>
+
+            <!-- Left Lime Brush { } Badge -->
+            <div class="absolute bottom-14 left-0 z-20 px-3 py-2 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 text-slate-950 font-black text-base shadow-lg shadow-lime-500/30 -rotate-6 border border-white/30">
+              { }
+            </div>
+
+            <!-- Right Amber Brush Wireframe Phone Badge -->
+            <div class="absolute bottom-10 right-0 z-20 p-2 rounded-xl bg-gradient-to-br from-amber-400 to-orange-400 text-slate-950 shadow-lg shadow-amber-500/30 rotate-6 border border-white/30">
+              <div class="w-8 h-11 rounded border-2 border-slate-950/85 p-0.5 flex flex-col gap-0.5">
+                <div class="h-3 border border-slate-950/80 rounded-sm"></div>
+                <div class="flex-1 grid grid-cols-2 gap-0.5">
+                  <div class="border border-slate-950/80 rounded-sm"></div>
+                  <div class="border border-slate-950/80 rounded-sm"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3D Android Mascot Peeking on Right -->
+            <div class="absolute right-8 bottom-9 z-10 w-24 h-28 drop-shadow-[0_12px_20px_rgba(0,0,0,0.65)]">
+              <svg viewBox="0 0 120 140" class="w-full h-full">
+                <defs>
+                  <linearGradient id="android3d" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#a3e635" />
+                    <stop offset="55%" stop-color="#65a30d" />
+                    <stop offset="100%" stop-color="#3f6212" />
+                  </linearGradient>
+                </defs>
+                <!-- Antennae -->
+                <line x1="40" y1="22" x2="31" y2="7" stroke="#84cc16" stroke-width="4.5" stroke-linecap="round" />
+                <line x1="80" y1="22" x2="89" y2="7" stroke="#84cc16" stroke-width="4.5" stroke-linecap="round" />
+                <!-- Head -->
+                <path d="M24 52 C24 27, 96 27, 96 52 Z" fill="url(#android3d)" />
+                <circle cx="44" cy="40" r="4" fill="#ffffff" />
+                <circle cx="76" cy="40" r="4" fill="#ffffff" />
+                <!-- Neck gap -->
+                <rect x="24" y="53" width="72" height="4" rx="2" fill="#e2e8f0" />
+                <!-- Body -->
+                <path d="M24 59 H96 V100 C96 107, 91 111, 84 111 H36 C29 111, 24 107, 24 100 Z" fill="url(#android3d)" />
+                <!-- Right Arm -->
+                <rect x="100" y="60" width="14" height="40" rx="7" fill="url(#android3d)" />
+                <!-- Legs -->
+                <rect x="38" y="110" width="14" height="22" rx="7" fill="url(#android3d)" />
+                <rect x="68" y="110" width="14" height="22" rx="7" fill="url(#android3d)" />
+              </svg>
+            </div>
+
+            <!-- Main Android Phone Mockup ("My App") -->
+            <div class="relative z-20 -translate-x-5 w-[158px] h-[272px] rounded-[24px] bg-slate-900 border-[4px] border-slate-700/90 shadow-[0_22px_50px_rgba(0,0,0,0.85)] overflow-hidden flex flex-col">
+              <!-- Status Bar + Punch Camera -->
+              <div class="h-5 bg-[#1b6e3f] px-2.5 flex items-center justify-between text-[8px] font-bold text-white/95 relative">
+                <span>12:30</span>
+                <span class="w-2 h-2 rounded-full bg-slate-950 ring-1 ring-slate-700"></span>
+                <span>5G ▮</span>
+              </div>
+              <!-- App Top Bar -->
+              <div class="h-7 bg-[#1f7a44] px-2.5 flex items-center justify-between text-white shadow-sm">
+                <span class="text-[11px] leading-none">☰</span>
+                <span class="text-[11px] font-bold tracking-tight">My App</span>
+                <span class="text-[11px] leading-none">⋮</span>
+              </div>
+
+              <!-- Light Screen Body -->
+              <div class="flex-1 bg-slate-100 p-2 flex flex-col justify-between text-slate-900">
+                <!-- Explore Card -->
+                <div class="bg-white rounded-xl p-1.5 shadow-sm border border-slate-200/80 space-y-1.5">
+                  <!-- Landscape Hero Art -->
+                  <div class="h-16 rounded-lg overflow-hidden bg-gradient-to-b from-lime-200 to-emerald-100 relative flex items-end">
+                    <div class="absolute top-2 left-3 w-3.5 h-3.5 rounded-full bg-amber-300"></div>
+                    <svg viewBox="0 0 120 45" class="w-full h-12" preserveAspectRatio="none">
+                      <path d="M0 45 L32 14 L62 45 Z" fill="#22c55e" />
+                      <path d="M40 45 L82 8 L120 45 Z" fill="#166534" />
+                    </svg>
+                  </div>
+                  <div class="px-0.5">
+                    <div class="text-[10px] font-extrabold text-slate-900 leading-tight">Explore</div>
+                    <div class="text-[7.5px] text-slate-500 leading-tight mt-0.5">Discover new places and amazing things.</div>
+                    <div class="mt-1.5 inline-block px-2.5 py-0.5 rounded-md bg-[#1f7a44] text-white text-[7.5px] font-bold">Get Started</div>
+                  </div>
+                </div>
+
+                <!-- 3 Action Tiles -->
+                <div class="grid grid-cols-3 gap-1">
+                  <div class="bg-white rounded-lg py-1.5 px-1 border border-slate-200/80 flex flex-col items-center gap-0.5 shadow-sm">
+                    <span class="w-4 h-4 rounded bg-emerald-100 text-[#1f7a44] flex items-center justify-center text-[8px]">💬</span>
+                    <span class="text-[6.5px] font-semibold text-slate-700">Messages</span>
+                  </div>
+                  <div class="bg-white rounded-lg py-1.5 px-1 border border-slate-200/80 flex flex-col items-center gap-0.5 shadow-sm">
+                    <span class="w-4 h-4 rounded bg-emerald-100 text-[#1f7a44] flex items-center justify-center text-[8px]">🔖</span>
+                    <span class="text-[6.5px] font-semibold text-slate-700">Bookmarks</span>
+                  </div>
+                  <div class="bg-white rounded-lg py-1.5 px-1 border border-slate-200/80 flex flex-col items-center gap-0.5 shadow-sm">
+                    <span class="w-4 h-4 rounded bg-emerald-100 text-[#1f7a44] flex items-center justify-center text-[8px]">👤</span>
+                    <span class="text-[6.5px] font-semibold text-slate-700">Profile</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Classic Android Nav Bar -->
+              <div class="h-6 bg-[#1f7a44] px-6 flex items-center justify-between text-white/90 text-[9px]">
+                <span>◀</span>
+                <span>●</span>
+                <span>■</span>
+              </div>
+            </div>
           </div>
 
-          <!-- Floating App Tiles -->
-          <div class="absolute top-6 left-1 w-11 h-11 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 shadow-lg flex items-center justify-center text-white text-lg -rotate-12 ring-1 ring-white/30">⚙️</div>
-          <div class="absolute bottom-14 left-0 w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-rose-500 shadow-lg flex items-center justify-center text-white text-lg -rotate-6 ring-1 ring-white/30">▶</div>
-          <div class="absolute top-20 right-0 w-11 h-11 rounded-xl bg-gradient-to-br from-violet-400 to-purple-700 shadow-lg flex items-center justify-center text-white text-lg rotate-12 ring-1 ring-white/30">🖼️</div>
-          <div class="absolute bottom-6 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 shadow-lg flex items-center justify-center text-slate-950 font-black text-xs rotate-6 ring-1 ring-white/30">&lt;/&gt;</div>
+          <!-- Caption matching "Android App Development" -->
+          <div class="mt-1 text-center">
+            <div class="text-sm font-black tracking-tight text-white drop-shadow">
+              Android App <span class="text-emerald-400">Development</span>
+            </div>
+          </div>
         </div>
       </div>
 
