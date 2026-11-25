@@ -8,7 +8,7 @@ plugins {
 def keystorePropsFile = rootProject.file("keystore.properties")
 def keystoreProps = new Properties()
 if (keystorePropsFile.exists()) {
-    keystoreProps.load(new FileInputStream(keystorePropsFile))
+    keystorePropsFile.withInputStream { keystoreProps.load(it) }
 }
 
 android {
@@ -29,25 +29,16 @@ android {
 
     signingConfigs {
         release {
-            if (keystorePropsFile.exists()) {
-                storeFile rootProject.file(keystoreProps.getProperty("storeFile", "release-keystore.jks"))
-                storePassword keystoreProps.getProperty("storePassword", "")
-                keyAlias keystoreProps.getProperty("keyAlias", "design4u")
-                keyPassword keystoreProps.getProperty("keyPassword", "")
-            } else if (System.getenv("KEYSTORE_FILE") != null) {
-                storeFile file(System.getenv("KEYSTORE_FILE"))
-                storePassword System.getenv("KEYSTORE_PASSWORD")
-                keyAlias System.getenv("KEY_ALIAS")
-                keyPassword System.getenv("KEY_PASSWORD")
-            }
+            storeFile file(keystoreProps.getProperty("storeFile", "release-keystore.jks"))
+            storePassword keystoreProps.getProperty("storePassword", "Design4U2026")
+            keyAlias keystoreProps.getProperty("keyAlias", "design4ukey")
+            keyPassword keystoreProps.getProperty("keyPassword", "Design4U2026")
         }
     }
 
     buildTypes {
         release {
-            if (keystorePropsFile.exists() || System.getenv("KEYSTORE_FILE") != null) {
-                signingConfig signingConfigs.release
-            }
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

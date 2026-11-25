@@ -70,38 +70,37 @@ jobs:
         id: inject
         run: python .github/scripts/inject_config.py
 
-      - name: Generate 2048-bit RSA Release Keystore
+      - name: Generate 2048-bit RSA Release Keystore (JKS)
         id: keystore
-        working-directory: android-template
         env:
           APP_NAME: ${{ steps.inject.outputs.app_name }}
           PACKAGE_ID: ${{ steps.inject.outputs.package_id }}
           VERSION_NAME: ${{ steps.inject.outputs.version_name }}
           VERSION_CODE: ${{ steps.inject.outputs.version_code }}
           BUILD_ID: ${{ steps.inject.outputs.build_id }}
+          STORE_PASS: "Design4U2026"
+          KEY_PASS: "Design4U2026"
+          KEY_ALIAS: "design4ukey"
         run: |
-          STORE_PASS=$(openssl rand -hex 12)
-          KEY_PASS=$(openssl rand -hex 12)
-          KEY_ALIAS="design4u_release"
-          SAFE_CN=$(printf '%s' "$APP_NAME" | tr -cd '[:alnum:] ._-' | sed 's/^ *//;s/ *$//')
-          [ -z "$SAFE_CN" ] && SAFE_CN="Design4U App"
+          rm -f android-template/app/release-keystore.jks
 
           keytool -genkeypair -v \
-            -keystore release-keystore.jks \
+            -storetype JKS \
+            -keystore android-template/app/release-keystore.jks \
             -alias "$KEY_ALIAS" \
             -keyalg RSA \
             -keysize 2048 \
             -validity 10000 \
             -storepass "$STORE_PASS" \
             -keypass "$KEY_PASS" \
-            -dname "CN=$SAFE_CN, OU=Mobile, O=Design4U, L=Cloud, S=Online, C=US"
+            -dname "CN=Design4U, OU=Mobile, O=Design4U, L=WahCantt, S=Punjab, C=PK"
 
           printf 'storeFile=release-keystore.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
-            "$STORE_PASS" "$KEY_ALIAS" "$KEY_PASS" > keystore.properties
+            "$STORE_PASS" "$KEY_ALIAS" "$KEY_PASS" > android-template/keystore.properties
 
-          FINGERPRINTS=$(keytool -list -v -keystore release-keystore.jks -alias "$KEY_ALIAS" -storepass "$STORE_PASS" | grep -E "SHA1:|SHA256:" || true)
+          FINGERPRINTS=$(keytool -list -v -storetype JKS -keystore android-template/app/release-keystore.jks -alias "$KEY_ALIAS" -storepass "$STORE_PASS" | grep -E "SHA1:|SHA256:" || true)
 
-          export STORE_PASS KEY_ALIAS KEY_PASS FINGERPRINTS
+          export FINGERPRINTS
           python -c '
           import datetime, os
           e = os.environ
@@ -116,6 +115,7 @@ jobs:
               "Build ID       : " + e.get("BUILD_ID", ""),
               "Generated At   : " + now,
               "",
+              "Keystore Type  : JKS",
               "Keystore File  : release-keystore.jks",
               "Key Alias      : " + e.get("KEY_ALIAS", ""),
               "Store Password : " + e.get("STORE_PASS", ""),
@@ -129,7 +129,7 @@ jobs:
               "future updates to this applicationId.",
               "============================================================",
           ]
-          open("../keystore-info.txt", "w", encoding="utf-8").write("\n".join(lines) + "\n")
+          open("keystore-info.txt", "w", encoding="utf-8").write("\n".join(lines) + "\n")
           '
 
       - name: Compile Signed Release APK & AAB
@@ -142,7 +142,7 @@ jobs:
           mkdir -p dist
           cp android-template/app/build/outputs/apk/release/app-release.apk dist/app-release.apk
           cp android-template/app/build/outputs/bundle/release/app-release.aab dist/app-release.aab
-          cp android-template/release-keystore.jks dist/release-keystore.jks
+          cp android-template/app/release-keystore.jks dist/release-keystore.jks
           cp keystore-info.txt dist/keystore-info.txt
           ls -lh dist/
 
